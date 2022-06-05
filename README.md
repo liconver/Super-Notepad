@@ -1,5 +1,5 @@
 # Super Notepad
 
-Note just just another notepad/grocery/to-do list app, a Super one
+Not just just another notepad/grocery/to-do list app, a Super one
 
 A very early on work-in-progress
