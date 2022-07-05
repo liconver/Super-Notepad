@@ -2,11 +2,9 @@
   <div>My component</div>
 </template>
 
-<script>
+<!-- <script>
 export default {
-  // name: 'ComponentName',
-  setup () {
-    return {}
-  }
+  name: 'ComponentName'
 }
-</script>
+</script> -->
+
