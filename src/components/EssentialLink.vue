@@ -1,3 +1,6 @@
+<style lang="sass" scoped>
+
+</style>
 <template>
   <q-item clickable tag="a" target="_blank" :href="link">
     <q-item-section v-if="icon" avatar>
@@ -6,7 +9,7 @@
 
     <q-item-section>
       <q-item-label>{{ title }}</q-item-label>
-      <q-item-label caption>{{ caption }}</q-item-label>
+      <q-item-label class="text-black" caption>{{ caption }}</q-item-label>
     </q-item-section>
   </q-item>
 </template>
