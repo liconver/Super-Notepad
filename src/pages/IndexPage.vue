@@ -27,8 +27,8 @@
         </q-tooltip>
       </q-btn>
 
-      <q-dialog v-model="modal" full-height full-width no-scroll>
-        <q-card class="column full-height bg-primary">
+      <q-dialog v-model="modal" full-height full-width>
+        <q-card class="column full-height bg-primary no-scroll no-wrap">
           <q-toolbar class="q-pb-none text-black " style="height: 56px">
             <q-input v-show="addTitle" class="col-10 text-h6 q-pa-none q-ma-none" dark="false" borderless
               v-model="title" placeholder="title..." />
@@ -54,7 +54,7 @@
             </q-btn>
           </q-toolbar>
           <q-editor v-if="showToolbar" dark="false" placeholder="..." toolbar-push toolbar-text-color="black"
-            toolbar-toggle-color="secondary" toolbarColor="primary" toolbarBg="primary" flat height="70vh"
+            toolbar-toggle-color="secondary" toolbarColor="primary" toolbarBg="primary" flat height="60vh"
             class="bg-primary text-black" v-model="editor" :toolbar="[
               ['unordered', 'ordered', 'outdent', 'indent',
                 {
