@@ -27,9 +27,9 @@
         </q-tooltip>
       </q-btn>
 
-      <q-dialog v-model="modal" full-height full-width>
-        <q-card class="column full-height bg-primary ">
-          <q-toolbar class="q-pb-none text-black" style="height: 56px">
+      <q-dialog v-model="modal" full-height full-width no-scroll>
+        <q-card class="column full-height bg-primary">
+          <q-toolbar class="q-pb-none text-black " style="height: 56px">
             <q-input v-show="addTitle" class="col-10 text-h6 q-pa-none q-ma-none" dark="false" borderless
               v-model="title" placeholder="title..." />
             <q-space />
@@ -53,34 +53,9 @@
               </q-menu>
             </q-btn>
           </q-toolbar>
-          <!-- <q-card-section class="row items-center content-stretch q-pb-none text-black">
-            <q-input v-show="addTitle" class="col-10 text-h6" dark="false" borderless v-model="title"
-              placeholder="title..." />
-            <q-space />
-            <q-btn icon="more_vert" flat round dense>
-              <q-menu anchor="bottom left" self="top right" class="bg-primary q-pa-md">
-                <q-list dense>
-                  <q-item>
-                    <q-toggle dark="false" dense color="secondary" class="text-black" v-model="addTitle"
-                      label="Add Title" />
-                  </q-item>
-                  <q-item>
-                    <q-toggle dark="false" dense color="secondary" class="text-black" v-model="showToolbar"
-                      label="Show Toolbar" />
-                  </q-item>
-
-                  <q-item>
-                    <q-item-section>New tab</q-item-section>
-                  </q-item>
-
-                </q-list>
-              </q-menu>
-            </q-btn>
-          </q-card-section> -->
-
-          <q-editor v-if="showToolbar" dark="false" placeholder="..." height="260px" toolbar-push
-            toolbar-text-color="black" toolbar-toggle-color="secondary" toolbarColor="primary" toolbarBg="primary" flat
-            class="bg-primary text-black" v-model="editor" min-height="5rem" :toolbar="[
+          <q-editor v-if="showToolbar" dark="false" placeholder="..." toolbar-push toolbar-text-color="black"
+            toolbar-toggle-color="secondary" toolbarColor="primary" toolbarBg="primary" flat height="70vh"
+            class="bg-primary text-black" v-model="editor" :toolbar="[
               ['unordered', 'ordered', 'outdent', 'indent',
                 {
                   icon: $q.iconSet.editor.fontSize,
@@ -106,7 +81,7 @@
                 'quote', 'link', 'bold', 'italic', 'underline', 'strike',
                 'undo', 'redo', 'removeFormat', 'viewsource', 'print'],
             ]" />
-          <q-editor v-else placeholder="..." height="260px" flat class="bg-primary  text-black" v-model="editor"
+          <q-editor v-else placeholder="..." height="70vh" flat class="bg-primary  text-black" v-model="editor"
             min-height="5rem" :toolbar="[]" />
 
 
