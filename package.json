@@ -12,12 +12,15 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.14.2",
+    "@splidejs/vue-splide": "^0.6.7",
     "axios": "^0.21.1",
     "element-plus": "^2.2.8",
     "pinia": "^2.0.11",
     "quasar": "^2.7.5",
+    "swiper": "^8.3.0",
     "vue": "3",
-    "vue-router": "4"
+    "vue-router": "4",
+    "vue3-carousel": "^0.1.40"
   },
   "devDependencies": {
     "@quasar/app-vite": "^1.0.5",

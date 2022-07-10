@@ -8,16 +8,50 @@
 
 <template>
   <q-page class="flex flex-center" style="background-color: #000000;">
-    <q-card class="my-card text-black" style="background: radial-gradient(circle, #f2dd1a 0%, #fff800 100%)">
-      <q-card-section>
-        <div class="text-h4 ">Hello Quasar</div>
-        <div class="text-subtitle2 ">Could this work for nOtes?</div>
-      </q-card-section>
 
-      <q-card-section class="q-pt-none">
-        <div class="row justify center">Here's another q-card section. </div>
-      </q-card-section>
-    </q-card>
+
+    <Splide :options="{
+      rewind: true, pagination: false, drag: 'free', isNavigation: true, fixedWidth: '250px', gap: '2rem',
+      breakpoints:
+        { 1024: { width: '60w' }, 768: { width: '80vw' }, 480: { width: '100vw' } }
+    }">
+      <SplideSlide>
+        <q-card class="my-card text-black q-ma-sm" @click="modal = true"
+          style="background: radial-gradient(circle, #f2dd1a 0%, #fff800 100%)">
+          <q-card-section>
+            <div class="text-h4 ">Hello Quasar</div>
+            <div class="text-subtitle2 ">Could this work for nOtes?</div>
+          </q-card-section>
+          <q-card-section class="q-pt-none">
+            <div class="row justify center">Here's a q-card section. </div>
+          </q-card-section>
+        </q-card>
+      </SplideSlide>
+      <SplideSlide style="width: 60vw">
+        <q-card class="my-card text-black q-ma-sm " @click="modal = true"
+          style="background: radial-gradient(circle, #f2dd1a 0%, #fff800 100%)">
+          <q-card-section>
+            <div class="text-h4 ">Hello Quasar</div>
+            <div class="text-subtitle2 ">Could this work for nOtes?</div>
+          </q-card-section>
+          <q-card-section class="q-pt-none">
+            <div class="row justify center">Here's another q-card section. </div>
+          </q-card-section>
+        </q-card>
+      </SplideSlide>
+      <SplideSlide style="width: 60vw">
+        <q-card class="my-card text-black q-ma-sm" @click="modal = true"
+          style="background: radial-gradient(circle, #f2dd1a 0%, #fff800 100%)">
+          <q-card-section>
+            <div class="text-h4 ">Hello Quasar</div>
+            <div class="text-subtitle2 ">Could this work for nOtes?</div>
+          </q-card-section>
+          <q-card-section class="q-pt-none">
+            <div class="row justify center">And another q-card section. </div>
+          </q-card-section>
+        </q-card>
+      </SplideSlide>
+    </Splide>
 
     <div>
       <q-btn round size="lg" class="fixed-bottom-right" icon="edit" text-color="primary" @click="modal = true">
@@ -28,10 +62,10 @@
       </q-btn>
 
       <q-dialog v-model="modal" full-height full-width>
-        <q-card class="column full-height bg-primary no-scroll no-wrap">
+        <q-card class="column full-height bg-primary no-wrap">
           <q-toolbar class="q-pb-none text-black " style="height: 56px">
             <q-input v-show="addTitle" class="col-10 text-h6 q-pa-none q-ma-none" dark="false" borderless
-              v-model="title" placeholder="title..." />
+              v-model="note.title" placeholder="title..." />
             <q-space />
             <q-btn icon="more_vert" flat round dense size="md">
               <q-menu anchor="bottom left" self="top right" class="bg-primary q-pa-md">
@@ -55,7 +89,7 @@
           </q-toolbar>
           <q-editor v-if="showToolbar" dark="false" placeholder="..." toolbar-push toolbar-text-color="black"
             toolbar-toggle-color="secondary" toolbarColor="primary" toolbarBg="primary" flat height="60vh"
-            class="bg-primary text-black" v-model="editor" :toolbar="[
+            class="bg-primary text-black" v-model="note.text" :toolbar="[
               ['unordered', 'ordered', 'outdent', 'indent',
                 {
                   icon: $q.iconSet.editor.fontSize,
@@ -81,7 +115,7 @@
                 'quote', 'link', 'bold', 'italic', 'underline', 'strike',
                 'undo', 'redo', 'removeFormat', 'viewsource', 'print'],
             ]" />
-          <q-editor v-else placeholder="..." height="70vh" flat class="bg-primary  text-black" v-model="editor"
+          <q-editor v-else placeholder="..." height="70vh" flat class="bg-primary  text-black" v-model="note.text"
             min-height="5rem" :toolbar="[]" />
 
 
@@ -99,22 +133,37 @@
 
 <script setup>
 import { ref } from 'vue'
+import { Splide, SplideSlide } from '@splidejs/vue-splide';
+import '@splidejs/vue-splide/css/core';
 
 const modal = ref(false)
 const showToolbar = ref(false)
 const addTitle = ref(false)
 
-const editor = ref('')
-const title = ref('')
+const note = ref({
+  text: '',
+  title: '',
+  date: new Date()
+})
 
+const notes = ref([
+  {
+    text: 'Coud this work for n0tes?',
+    title: 'Hello Quasar',
+    date: new Date()
+  },
+  {
+    text: 'This is a note',
+    title: 'Note 1',
+    date: new Date()
+  },
+  {
+    text: 'This is another note',
+    title: 'Note 2',
+    date: new Date()
+  }
+])
 
-let logModel = () => {
-  console.log({
-    title: title.value,
-    editor: editor.value,
-    toolbar: toolbar.value
-  })
-}
 
 </script>
 
