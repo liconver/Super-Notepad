@@ -16,14 +16,14 @@
         { 1024: { width: '60w' }, 768: { width: '80vw' }, 480: { width: '100vw' } }
     }" :has-track="false">
       <SplideTrack>
-        <SplideSlide v-for="note in notes" :note="note" :key="note.date">
+        <SplideSlide v-for="note in notes" :note="note" :key="note.id">
           <q-card class="my-card text-black q-ma-sm" @click="modal2 = true"
             style="background: radial-gradient(circle, #f2dd1a 0%, #fff800 100%)">
             <q-card-section class="q-pb-sm overflow-hidden">
               <div class="text-h5 ">{{ note.title }}</div>
             </q-card-section>
             <q-card-section class="q-pt-none overflow-hiden-y">
-              <div class="row justify center">{{ note.text }}</div>
+              <div class="row justify center" v-html="note.text"></div>
             </q-card-section>
           </q-card>
           <q-dialog v-model="modal2" full-height full-width>
@@ -154,7 +154,7 @@
                 },
                 'quote', 'link', 'bold', 'italic', 'underline', 'strike',
                 'undo', 'redo', 'removeFormat', 'viewsource', 'print'], //TODO: add attach icon
-            ]" />
+            ]" /> <!-- TODO: keep list-style-type as disc always -->
           <q-editor v-else placeholder="..." height="70vh" flat class="bg-primary  text-black" v-model="newNote.text"
             min-height="5rem" :toolbar="[]" />
           <q-card-section class="col q-pt-none">
@@ -183,12 +183,13 @@ const multiple = ref(false)
 const newNote = ref({
   text: '',
   title: '',
-  date: new Date(),
+  id: new Date(),
 })
 
-const notes = ref([
-  'oiho'
-])
+const notes = ref([])
+function getIndex(list, id) {
+  return list.findIndex((item) => item.id === id)
+}
 
 watch(
   () => modal1.value,
@@ -198,7 +199,7 @@ watch(
       notes.value.push({
         text: newNote.value.text,
         title: newNote.value.title,
-        date: new Date()
+        id: new Date()
       })
       newNote.value.text = ''
       newNote.value.title = ''
@@ -210,6 +211,7 @@ watch(
   () => {
     console.log('watch2 ran');
     console.log(notes.value.length);
+    console.log(notes.value);
     if (notes.value.length > 1) {
       multiple.value = true
     }
