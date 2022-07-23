@@ -3,7 +3,7 @@
   width: 100%
   max-width: 250px
   min-height: 230px
-  max-height:250px
+  max-height:230px
 </style>
 
 <template>
@@ -187,21 +187,7 @@ const newNote = ref({
 })
 
 const notes = ref([
-  // {
-  //   text: 'Coud this work for n0tes?',
-  //   title: 'Hello Quasar',
-  //   date: new Date()
-  // },
-  // {
-  //   text: 'This is a note',
-  //   title: 'Note 1',
-  //   date: new Date()
-  // },
-  // {
-  //   text: 'This is another note',
-  //   title: 'Note 2',
-  //   date: new Date()
-  // }
+  'oiho'
 ])
 
 watch(
