@@ -1,8 +1,8 @@
 {
-  "name": "quasar-project",
+  "name": "super-notepad",
   "version": "0.0.1",
-  "description": "A Quasar Project",
-  "productName": "Quasar App",
+  "description": "A Project by Liam Converse",
+  "productName": "Super Notepad",
   "author": "liconver <liamc@vt.edu>",
   "private": true,
   "scripts": {

@@ -8,15 +8,15 @@
           <img alt="Super Notepad logo" src="~assets/logo.svg" class="justify-start">
         </q-toolbar-title>
 
-        <div style="color: #000000;">Quasar v{{ $q.version }}</div>
+        <div style="color: #000000;"> v0.0.1</div>
       </q-toolbar>
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered class="bg-primary">
-      <q-list>
-        <q-item-label class="text-black" header>
-          Essential Links
-        </q-item-label>
+      <q-list class="q-pt-lg">
+        <!-- <q-item-label class="text-black" header>
+          Menu
+        </q-item-label> -->
 
         <EssentialLink v-for="link in linksList" :key="link.title" v-bind="link" />
       </q-list>
@@ -44,46 +44,46 @@ const toggleLeftDrawer = () => {
 }
 const linksList = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    title: 'Account',
+    caption: 'Login to access your notes across all devices',
+    icon: 'account_circle',
+    link: 'https://'
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
+    title: 'Share to social',
+    caption: 'Share note as tweet or instagram post',
     icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
+    link: 'https://'
   },
   {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
+    title: 'Messaging',
+    caption: 'Live chat wth other users or share notes',
+    icon: 'chat',
+    link: 'https://'
+  },
+  {
+    title: 'Web App',
+    caption: 'Browser version of the app',
     icon: 'public',
-    link: 'https://facebook.quasar.dev'
+    link: 'https://supernotepad.app'
   },
   {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
+    title: 'Suggestions',
+    caption: 'suggestions, bugs, or feature requests',
+    icon: 'record_voice_over',
+    link: 'https://github.com/liconver'
+  },
+  {
+    title: 'My Website',
+    caption: 'liamconverse.tech',
+    icon: 'code',
+    link: 'https://liamconverse.tech'
+  },
+  {
+    title: 'Donate',
+    caption: 'Buy me a coffee!',
     icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
+    link: 'https://'
   }
 ]
 </script>

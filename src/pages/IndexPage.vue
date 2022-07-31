@@ -1,15 +1,14 @@
 <style lang="sass" scoped>
 .my-card
   width: 100%
-  max-width: 250px
-  min-height: 230px
-  max-height:230px
+  width: 250px
+  height: 230px
 </style>
 
+
 <template>
-  <q-page class="flex flex-center" style="background-color: #000000;">
-
-
+  <q-page class="flex flex-center no-scroll " style="background-color: #000000;">
+    //TODO: componentize editor and set up global pinia store
     <Splide :options="splideOptions">
       <SplideSlide v-for="(note, index) in notes" :index="index" :key="note.id">
         <q-card class="my-card text-black q-ma-sm" @click="editNote" :id="index"
@@ -20,7 +19,6 @@
           <q-card-section class="q-pt-none overflow-hiden-y">
             <div class="row justify center" v-html="note.text"></div>
           </q-card-section>
-
           <q-dialog v-model="modal2" full-height full-width>
             <q-card class="column full-height bg-primary no-wrap">
               <q-toolbar class="q-pb-none text-black " style="height: 56px">
@@ -28,17 +26,19 @@
                   v-model="editor.title" placeholder="title..." />
                 <q-space />
                 <q-btn icon="more_vert" flat round dense size="md">
-                  <q-menu anchor="bottom left" self="top right" class="bg-primary q-pa-md">
+                  <q-menu anchor="bottom left" self="top right" class="bg-primary q-pa-sm">
                     <q-list dense>
-                      <q-item>
-                        <q-toggle dense color="secondary" class="text-black" v-model="addTitle" label="Add Title" />
+                      <q-item clickable>
+                        <q-checkbox label="Add Title" v-model="addTitle" unchecked-icon="check_box_outline_blank"
+                          checked-icon="check_box" :dark="false" color="black" dense />
                       </q-item>
-                      <q-item>
-                        <q-toggle dense color="secondary" class="text-black" v-model="showToolbar"
-                          label="Show Toolbar" />
+                      <q-item clickable>
+                        <q-checkbox label="Show Toolbar" v-model="showToolbar" unchecked-icon="check_box_outline_blank"
+                          checked-icon="check_box" :dark="false" color="black" dense />
                       </q-item>
-                      <q-item>
-                        <q-item-section>New tab</q-item-section>
+                      <q-item clickable>
+                        <q-checkbox label="Delete Note" checked-icon="delete" v-model="deleteM" @click="deleteNote"
+                          :dark="false" color="black" indeterminate-value="true" dense />
                       </q-item>
                     </q-list>
                   </q-menu>
@@ -58,12 +58,11 @@
       </SplideSlide>
     </Splide>
 
-
     <div>
-      <q-btn round size="lg" class="fixed-bottom-right" icon="edit" text-color="primary" @click="modal1 = true">
+      <q-btn round size="xl" class="fixed-bottom-right q-pa-lg" icon="edit" text-color="primary" @click="modal1 = true">
         <q-tooltip transition-show="rotate" transition-hide="rotate" anchor="top left" self="bottom middle"
           class="bg-primary text-black text-body2" :offset="[40, 14]">
-          Create a new note
+          new note
         </q-tooltip>
       </q-btn>
 
@@ -76,17 +75,18 @@
             <q-btn icon="more_vert" flat round dense size="md">
               <q-menu anchor="bottom left" self="top right" class="bg-primary q-pa-md">
                 <q-list dense>
-                  <q-item>
-                    <q-toggle dense color="secondary" class="text-black" v-model="addTitle" label="Add Title" />
+                  <q-item clickable>
+                    <q-checkbox label="Add Title" v-model="addTitle" unchecked-icon="check_box_outline_blank"
+                      checked-icon="check_box" :dark="false" color="black" dense />
                   </q-item>
-                  <q-item>
-                    <q-toggle dense color="secondary" class="text-black" v-model="showToolbar" label="Show Toolbar" />
+                  <q-item clickable>
+                    <q-checkbox label="Show Toolbar" v-model="showToolbar" unchecked-icon="check_box_outline_blank"
+                      checked-icon="check_box" :dark="false" color="black" dense />
                   </q-item>
-
-                  <q-item>
-                    <q-item-section>New tab</q-item-section>
+                  <q-item clickable>
+                    <q-checkbox label="Delete Note" checked-icon="delete" v-model="deleteM" @click="deleteNote"
+                      :dark="false" color="black" indeterminate-value="true" dense />
                   </q-item>
-
                 </q-list>
               </q-menu>
             </q-btn>
@@ -106,17 +106,78 @@
   </q-page>
 </template>
 
+
 <script setup>
-import { ref, reactive, watch } from 'vue'
+import { ref, reactive, watch, nextTick } from 'vue'
 import { useQuasar } from 'quasar'
-import { Splide, SplideSlide, SplideTrack } from '@splidejs/vue-splide';
+import { Splide, SplideSlide } from '@splidejs/vue-splide';
 import '@splidejs/vue-splide/css/core';
 
 const modal1 = ref(false)
 const modal2 = ref(false)
 const showToolbar = ref(false)
 const addTitle = ref(false)
-// const multiple = ref(false)
+const newNote = ref({
+  text: '',
+  title: '',
+  id: new Date().getTime(),
+})
+const editor = ref({
+  text: '',
+  title: '',
+})
+const notes = ref([])
+watch(
+  () => modal1.value,
+  () => {
+    console.log('watch1 ran');
+    if (newNote.value.text.length > 0) {
+      notes.value.push({
+        text: newNote.value.text,
+        title: newNote.value.title,
+        id: new Date().getTime()
+      })
+      newNote.value.text = ''
+      newNote.value.title = ''
+    }
+  }
+)
+function editNote(event) {
+  // console.log(event.target.getAttribute('id'))
+  let index = event.target.getAttribute('id')
+  modal2.value = true
+  editor.value = notes.value[index]
+}
+const deleteM = true;
+
+const splideOptions = reactive({
+  rewind: false, pagination: false, drag: 'free', isNavigation: true, autoWidth: true, gap: '0.5rem',
+  // breakpoints: { 768: { width: '80%' }, 480: { width: '100%' } },
+  width: '100%',
+  arrows: false, rewind: true
+})
+
+async function updateArrows() {
+  await nextTick()
+  console.log(document.querySelector('.splide').offsetWidth)
+  if (document.querySelector('.splide').offsetWidth >= window.innerWidth - 10) {
+    splideOptions.arrows = true
+  } else {
+    splideOptions.arrows = false
+  }
+}
+
+watch(
+  () => notes.value.length,
+  () => {
+    // splideWidth.value = document.querySelector('.splide').offsetWidth
+    console.log('watch2 ran');
+    console.log(notes.value.length);
+
+    console.log(document.querySelector('.splide').offsetWidth)
+    updateArrows()
+  }
+)
 
 const $q = useQuasar()
 const toolbar = ['unordered', 'ordered', 'outdent', 'indent', {
@@ -143,58 +204,18 @@ const toolbar = ['unordered', 'ordered', 'outdent', 'indent', {
   'quote', 'link', 'bold', 'italic', 'underline', 'strike',
   'undo', 'redo', 'removeFormat', 'viewsource', 'print']//TODO: add attach icon
 
-const splideOptions = reactive({
-  rewind: false, pagination: false, drag: 'free', isNavigation: true, fixedWidth: '250px', gap: '2rem',
-  breakpoints:
-    { 1024: { width: '60w' }, 768: { width: '80vw' }, 480: { width: '100vw' } }, arrows: false
-})
-
-const newNote = ref({
-  text: '',
-  title: '',
-  id: new Date().getTime(),
-})
-const editor = ref({
-  text: '',
-  title: '',
-})
-
-const notes = ref([])
-
-function editNote(event) {
-  console.log(event.target.getAttribute('id'))
-  let index = event.target.getAttribute('id')
-  modal2.value = true
-  editor.value = notes.value[index]
-}
-
-watch(
-  () => modal1.value,
-  () => {
-    console.log('watch1 ran');
-    if (newNote.value.text.length > 0) {
-      notes.value.push({
-        text: newNote.value.text,
-        title: newNote.value.title,
-        id: new Date().getTime()
-      })
-      newNote.value.text = ''
-      newNote.value.title = ''
-    }
-  }
-)
-watch(
-  () => notes.value.length,
-  () => {
-    console.log('watch2 ran');
-    console.log(notes.value.length);
-    console.log(notes.value);
-    if (notes.value.length > 1) {
-      splideOptions.arrows = true
-    }
-    console.log(splideOptions.arrows);
-  }
-)
+// watch(
+//   () => splideWidth.value,
+//   () => {
+//     console.log('watch3 ran');
+//     console.log(splideWidth.value);
+//     if (splideWidth.value >= window.innerWidth - 10) {
+//       splideOptions.arrows = true
+//     } else {
+//       splideOptions.arrows = false
+//     }
+//   }
+// )
 
 </script>
 

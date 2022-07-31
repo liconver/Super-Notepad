@@ -5,16 +5,19 @@
         v-model="editor.title" placeholder="title..." />
       <q-space />
       <q-btn icon="more_vert" flat round dense size="md">
-        <q-menu anchor="bottom left" self="top right" class="bg-primary q-pa-md">
+        <q-menu anchor="bottom left" self="top right" class="bg-primary q-pa-sm">
           <q-list dense>
-            <q-item>
-              <q-toggle dense color="secondary" class="text-black" v-model="addTitle" label="Add Title" />
+            <q-item clickable>
+              <q-checkbox label="Add Title" v-model="addTitle" unchecked-icon="check_box_outline_blank"
+                checked-icon="check_box" :dark="false" color="black" dense />
             </q-item>
-            <q-item>
-              <q-toggle dense color="secondary" class="text-black" v-model="showToolbar" label="Show Toolbar" />
+            <q-item clickable>
+              <q-checkbox label="Show Toolbar" v-model="showToolbar" unchecked-icon="check_box_outline_blank"
+                checked-icon="check_box" :dark="false" color="black" dense />
             </q-item>
-            <q-item>
-              <q-item-section>New tab</q-item-section>
+            <q-item clickable>
+              <q-checkbox label="Delete Note" unchecked-icon="delete" checked-icon="delete" v-model="deleteM"
+                @click="deleteNote" :dark="false" color="black" indeterminate-value="true" dense />
             </q-item>
           </q-list>
         </q-menu>
